@@ -3,7 +3,6 @@ var cors = require("cors");
 const app = express();
 app.use(express.json());
 app.use(cors());
-const port = 3000;
 
 // Store de PAGOS
 const pagos = {};
@@ -27,6 +26,10 @@ const kafka = new Kafka({
         password: process.env.password,
     },
 });
+
+
+const port = process.env.PORT || 3000;
+
 
 class Gateway {
     constructor(kafka) {
