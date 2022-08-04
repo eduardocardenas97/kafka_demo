@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Demo</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->	
+	<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="css/util.css">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+<!--===============================================================================================-->
+</head>
+<body>
+	
+	<div class="limiter">
+		<div class="container-login100">
+			<div class="wrap-login100">
+				<div class="login100-pic js-tilt" data-tilt>
+					<img src="images/img-01.png" alt="IMG">
+				</div>
+
+				<form class="login100-form validate-form">
+					<span class="login100-form-title">
+						Pago directo
+					</span>
+
+					<div class="wrap-input100">
+						<input class="input100" type="text" id="idTerminal" placeholder="id terminal">
+						<span class="focus-input100"></span>
+					</div>
+
+					<div class="wrap-input100">
+						<input class="input100" type="text" id="monto" placeholder="monto">
+						<span class="focus-input100"></span>
+					</div>
+					
+					<div class="container-login100-form-btn">
+						<button type='button' class="login100-form-btn" id="pagar">
+							Pagar
+						</button>
+					</div>
+
+				
+
+					<div class="text-center p-t-136">
+						<div class="text-center" id="resultado"></div>
+
+						<a class="txt2" href="#">
+							Demo
+						</a>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	
+	
+
+	<script>
+		//Request to the server localhost:3000/pago/id
+		//Request with fetch
+		//Include in body the id terminal and the monto
+		//Include in body the id argument: idTerminal + monto
+		//When the request is done, the response is a json with the status and the message
+		async function pagar(){
+			console.log("pagar");
+			var myHeaders = new Headers();
+				myHeaders.append("Content-Type", "application/json");
+
+			//Set in raw the id terminal and the monto in the html
+			var idTerminal = document.getElementById("idTerminal").value;
+			var monto = document.getElementById("monto").value;
+			var raw = JSON.stringify({
+				"idTerminal": idTerminal, 
+				"importe": +monto, 
+				"id": Math.floor(Math.random() * 100000)
+			});
+
+			var requestOptions = {
+				method: 'POST',
+				headers: myHeaders,
+				body: raw,
+				redirect: 'follow'
+			};
+
+			const response = await fetch("http://localhost:3000/pago/id=123", requestOptions)
+			const data = await response.json();
+			console.log(data);
+		
+			//Show the message in the div with id resultado
+			document.getElementById("resultado").innerHTML = JSON.stringify(data);
+
+
+		}
+
+		//When the button is clicked, the function pagar is called
+		document.getElementById("pagar").addEventListener("click", async () => {
+			await pagar();
+		});
+	</script>
+
+</body>
+</html>
