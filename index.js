@@ -78,7 +78,7 @@ const procesarRespuestaPago = async ({ id, callback }) => {
 };
 
 //Create routes
-app.post("/pago/:id", async (req, res) => {
+app.post("/pago/", async (req, res) => {
     console.log("inicia pago => ", req.body);
     await gateway.iniciarPago({
         id: req.body.id,
